@@ -7,7 +7,7 @@ require(["dojo/node!fs", "dojox/json/ref", "dojo/_base/kernel"], function(fs, re
     const LANGS_W_DEPS = ['arduino.js'];
 
     const cloneDeep = nodeRequire(`${CWD}/lodash.cloneDeep.js`);
-    const hljs = nodeRequire(`${HIGHLIGHT_DIR}/highlight.js`);
+    const hljs = nodeRequire(`${HIGHLIGHT_DIR}/core.js`);
 
     /**
      * Translate any RegExp objects that may exist in a language definition into a string representation.
@@ -24,7 +24,9 @@ require(["dojo/node!fs", "dojox/json/ref", "dojo/_base/kernel"], function(fs, re
         for (const key in lang) {
             if (lang[key] instanceof RegExp) {
                 lang[key] = lang[key].source;
-            } else if (typeof lang[key] === 'object') {
+            }
+            // TODO: add support for callbacks
+            else if (typeof lang[key] === 'object') {
                 regexToStr(lang[key], nestingLevel + 1);
             }
         }
